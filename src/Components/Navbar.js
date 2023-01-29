@@ -21,6 +21,7 @@ function App() {
           <Nav.Link href="/projects">Projects</Nav.Link>
 
           <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="/todolist">TodoList</Nav.Link>
         </Nav>
       </Container>
     </Navbar>
