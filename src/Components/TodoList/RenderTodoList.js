@@ -3,7 +3,7 @@ import TodoForm from "./TodoForm";
 import Navbar from "../Navbar";
 import { Container, Row, Card } from "react-bootstrap";
 import TodoList from "../TodoList/TodoList";
-
+import Footer from "../Footer";
 function RenderTodoList() {
   const [todoList, setTodoList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -48,7 +48,8 @@ function RenderTodoList() {
         console.log(res);
         // Remove the todo from the local state
         const newTodoList = todoList.filter((todo) => id !== todo.id);
-        setTodoList(newTodoList);
+ 
+       setTodoList(newTodoList);
       });
   };
 
@@ -72,7 +73,7 @@ function RenderTodoList() {
   }
 
   return (
-    <Container className="">
+    <Container >
       <Row className="mb-5">
         <Navbar />
       </Row>
@@ -90,6 +91,7 @@ function RenderTodoList() {
           )}
         </Card.Body>
       </Card>
+      <Footer/>
     </Container>
   );
 }

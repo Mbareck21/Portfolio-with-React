@@ -6,6 +6,7 @@ import {
   ListGroup,
   Card,
   Row,
+  Col,
   Container,
 } from "react-bootstrap";
 import Footer from "./Footer";
@@ -42,73 +43,79 @@ function Contact() {
   };
 
   return (
-    <Container>
+    <Container className="pt-4">
       <Navbar />
-      <Row className="d-flex justify-content-between my-5">
-        <Card className="my-5">
-          <Card.Header className="">
-            <h5>Get in Touch</h5>
-          </Card.Header>
-          <Form ref={formRef} className="p-3 bg-secondary mt-3">
-            <Form.Group className="mb-3">
-              <Form.Label variant="light">Name</Form.Label>
-              <Form.Control
-                type="name"
-                placeholder="John Doe"
-                onChange={(e) => setName(e.target.value)}
-              />
-              <Form.Label className="mt-3">Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Message</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                onChange={(e) => setMessage(e.target.value)}
-              />
-            </Form.Group>
-            <Button onClick={handleSubmit}>Submit</Button>{" "}
-            <Button onClick={handleReset}>Reset</Button>
-          </Form>
-        </Card>
+      <Row className="d mt-5">
+        <Col lg={4}>
+          <Card className="">
+            <Card.Header className="">
+              <h5>Get in Touch</h5>
+            </Card.Header>
+            <Form ref={formRef} className="p-3 bg-secondary">
+              <Form.Group className="mb-3">
+                <Form.Label variant="light">Name</Form.Label>
+                <Form.Control
+                  type="name"
+                  placeholder="John Doe"
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <Form.Label className="mt-3">Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="name@example.com"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Message</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+              </Form.Group>
+              <Button onClick={handleSubmit}>Submit</Button>{" "}
+              <Button onClick={handleReset}>Reset</Button>
+            </Form>
+          </Card>
+        </Col>
 
-        <Card className="">
-          <Accordion>
-            <Accordion.Header>
-              <h5>Click to see more </h5>
-            </Accordion.Header>
-            <Accordion.Body>
-              <Card.Body>
-                <Card.Title>LEMINE MBARECK</Card.Title>
-              </Card.Body>
+        <Col>
+          <Card className="p-0">
+            <Accordion>
+              <Accordion.Header>
+                <h5>Click to see more </h5>
+              </Accordion.Header>
+              <Accordion.Body>
+                <Card.Body>
+                  <Card.Title as="h5">LEMINE MBARECK</Card.Title>
+                </Card.Body>
 
-              <ListGroup className="list-group-flush" href="">
-                <ListGroup.Item>
-                  <img
-                    src="https://img.icons8.com/bubbles/40/github.png"
-                    alt=""
-                  />
-                  <a href="https://github.com/Mbareck21">Find me on GitHub</a>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <img
-                    src="https://img.icons8.com/bubbles/40/apple-mail.png"
-                    alt=""
-                  />
-                  <a href="mailto:missara.lamine@gmail.com">Send me an email</a>
-                </ListGroup.Item>
-              </ListGroup>
-            </Accordion.Body>
-          </Accordion>
-        </Card>
-
-        {yourmsg}
+                <ListGroup className="list-group-flush" href="">
+                  <ListGroup.Item>
+                    <img
+                      src="https://img.icons8.com/bubbles/40/github.png"
+                      alt=""
+                    />
+                    <a href="https://github.com/Mbareck21">Find me on GitHub</a>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <img
+                      src="https://img.icons8.com/bubbles/40/apple-mail.png"
+                      alt=""
+                    />
+                    <a href="mailto:missara.lamine@gmail.com">
+                      Send me an email
+                    </a>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Accordion.Body>
+            </Accordion>
+          </Card>
+          {yourmsg}
+        </Col>
       </Row>
+      <Row style={{  height: "20rem" }} className="text-center p-3 align-items-center"><h5>Under Construction</h5></Row>
       <Footer />
     </Container>
   );

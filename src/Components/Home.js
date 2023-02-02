@@ -81,15 +81,17 @@ function Home() {
             </span>
           </Card.Title>
           <Card.Text>
+            <li>
             Under the supervision of the president’s chief of staff, I performed
             a myriad of tasks, involving the planning of official communication
             strategies, campaigning, as well as public information and media
             relations.
+            </li>
           </Card.Text>
         </Card.Body>
       </Card>
 
-      <Footer/>
+      <Footer />
     </Container>
   );
 }
