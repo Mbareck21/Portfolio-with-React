@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button} from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import InputWithLabel from "./InputWithLabel";
 function TodoForm({ onAddTodo }) {
   const [todoTitle, setTodoTitle] = React.useState("");
@@ -11,7 +11,10 @@ function TodoForm({ onAddTodo }) {
 
   const handleAddTodo = async (e) => {
     e.preventDefault();
-
+    if (todoTitle.trim() === "") {
+      console.log("Todo title cannot be empty");
+      return;
+    }
     try {
       const response = await fetch(
         `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default`,

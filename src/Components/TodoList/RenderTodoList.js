@@ -48,13 +48,13 @@ function RenderTodoList() {
         console.log(res);
         // Remove the todo from the local state
         const newTodoList = todoList.filter((todo) => id !== todo.id);
- 
-       setTodoList(newTodoList);
+
+        setTodoList(newTodoList);
       });
   };
 
-  // addTodo function
   function addTodo(newTodo) {
+   
     fetch(
       `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default`,
       {
@@ -69,11 +69,39 @@ function RenderTodoList() {
       .then((response) => response.json())
       .then((res) => {
         setTodoList([...todoList, { ...newTodo, id: res.id }]);
+        
+      });
+  }
+  function editTodo(updatedTodo) {
+    if (!updatedTodo.fields.Title || /^\s*$/.test(updatedTodo.fields.Title)) {
+      return;
+    }
+    const updatedTodoList = todoList.map((todo) => {
+      if (todo.id === updatedTodo.id) {
+        return { ...updatedTodo };
+      }
+      return todo;
+    });
+
+    fetch(
+      `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default/${updatedTodo.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ fields: updatedTodo.fields }),
+      }
+    )
+      .then((response) => response.json())
+      .then(() => {
+        setTodoList(updatedTodoList);
       });
   }
 
   return (
-    <Container >
+    <Container>
       <Row className="mb-5">
         <Navbar />
       </Row>
@@ -87,11 +115,15 @@ function RenderTodoList() {
           {isLoading ? (
             <p>Loading...</p>
           ) : (
-            <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+            <TodoList
+              todoList={todoList}
+              onRemoveTodo={removeTodo}
+              onEditTodo={editTodo}
+            />
           )}
         </Card.Body>
       </Card>
-      <Footer/>
+      <Footer />
     </Container>
   );
 }
