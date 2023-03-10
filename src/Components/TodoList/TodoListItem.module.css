@@ -1,0 +1,69 @@
+.ListItem {
+  font-family: "Walter Turncoat", cursive;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: larger;
+  cursor: grab;
+  padding: 0.2em;
+  background: linear-gradient(
+    90deg,
+    rgb(128, 127, 129) 0%,
+    rgb(142, 177, 210) 100%
+  );
+  border: none;
+  border-radius: 5px;
+}
+
+.Complete {
+  font-family: "Walter Turncoat", cursive;
+  text-decoration: line-through;
+  opacity: 0.4;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: larger;
+  padding: 0.2em;
+  background: linear-gradient(
+    90deg,
+    rgb(128, 127, 129) 0%,
+    rgb(142, 177, 210) 100%
+  );
+  border: none;
+  border-radius: 5px;
+}
+.ListItemIcons {
+  display: flex;
+  width: 15%;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.DeleteIcon {
+  color: red;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+.EditIcon {
+  color: yellowgreen;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+}
+
+.Sort {
+  top: 10px;
+  cursor: pointer;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  font-family: "Walter Turncoat", cursive;
+  color: #e3a3a3;
+  width: 35px;
+  height: 35px;
+}
+.SortText {
+  font-family: "Walter Turncoat", cursive;
+}
