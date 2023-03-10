@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import TodoForm from "./TodoForm";
-import Navbar from "../Navbar";
 import { Container, Row, Card } from "react-bootstrap";
 import TodoList from "../TodoList/TodoList";
-import Footer from "../Footer";
 function RenderTodoList() {
   const [todoList, setTodoList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -140,9 +138,6 @@ function RenderTodoList() {
 
   return (
     <Container>
-      <Row className="mb-5">
-        <Navbar />
-      </Row>
       <Card className="bg-dark text-white text-center w-50 mx-auto d-flex justify-content-center">
         <Card.Header>
           <h1>Todo List</h1>
@@ -167,7 +162,6 @@ function RenderTodoList() {
         </Card.Body>
       </Card>
       <Row className="mb-0" style={{ height: "35vh" }}></Row>
-      <Footer />
     </Container>
   );
 }

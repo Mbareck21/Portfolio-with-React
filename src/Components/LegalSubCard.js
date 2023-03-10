@@ -2,7 +2,7 @@ import { Card, Button } from "react-bootstrap";
 
 function LegalCard() {
   return (
-    <Card>
+    <Card className="bg-success text-white p-0">
       <Card.Body>
         <Card.Text as="p">
           This project is inspired by my job as a legal program manager. I built

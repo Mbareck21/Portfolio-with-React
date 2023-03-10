@@ -1,19 +1,12 @@
 import React from "react";
-import Navbar from "./Navbar";
 import { Container, Card } from "react-bootstrap";
 import Header from "./Header";
 import EducationExperienceSkills from "./Ed-EX-SK";
-import Footer from "./Footer";
 function Home() {
   return (
     <Container className="container">
-      <Navbar />
-      {/* Header Information */}
       <Header />
-      {/* show education, expertise, and skills here */}
-
       <EducationExperienceSkills />
-      {/* work experience section */}
       <Card>
         <Card.Header>
           <h4 className="text-center">
@@ -82,16 +75,14 @@ function Home() {
           </Card.Title>
           <Card.Text>
             <li>
-            Under the supervision of the president’s chief of staff, I performed
-            a myriad of tasks, involving the planning of official communication
-            strategies, campaigning, as well as public information and media
-            relations.
+              Under the supervision of the president’s chief of staff, I
+              performed a myriad of tasks, involving the planning of official
+              communication strategies, campaigning, as well as public
+              information and media relations.
             </li>
           </Card.Text>
         </Card.Body>
       </Card>
-
-      <Footer />
     </Container>
   );
 }

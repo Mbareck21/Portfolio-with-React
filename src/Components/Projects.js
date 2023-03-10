@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Card, Toast, Container, Row, Col, Button } from "react-bootstrap/";
-import Footer from "./Footer";
 import LegalCard from "./LegalSubCard";
-import Navbar from "./Navbar";
 import TodoCard from "./TodoList/TodoCard";
 
 const avatar = "https://img.icons8.com/bubbles/30/github.png";
 function Projects() {
-  const [projects, setProjects] = useState([]);
+  const [gitProjects, setGitProjects] = useState([]);
   const [isloading, setIsloading] = useState(true);
   // fetching Github Repositories
   useEffect(() => {
@@ -15,15 +13,12 @@ function Projects() {
       .then((res) => res.json())
       .then((res) => {
         console.log(res[2]);
-        setProjects(res);
+        setGitProjects(res);
         setIsloading(false);
       });
   }, []);
   return (
     <Container className="">
-      <Row className="my-5">
-        <Navbar />
-      </Row>
       <Row className="p-0">
         <Card className="p-0">
           <Card.Header>
@@ -43,12 +38,12 @@ function Projects() {
               check if the component is still loading data from the API or not.
             </p>
 
-            <Row className="p-2" style={{ background: "#7a7a7a" }}>
+            <Row className="p-2 rounded">
               {!isloading ? (
                 <>
-                  {projects.map((project) => {
+                  {gitProjects.map((project) => {
                     return project.description != null ? (
-                      <Col className="col-md-4">
+                      <Col key={project.id} className="col-md-4">
                         <Toast className="mx-auto p-0  mb-3 ">
                           <Toast.Header closeButton={false} className="">
                             <img src={avatar} className="rounded me-2" alt="" />
@@ -81,15 +76,13 @@ function Projects() {
         </Card>
       </Row>
       <Row className="mt-1 p-0">
-        <Col sm={3} className="p-0">
+        <Col sm={3} className="p-0 me-1 mb-1">
           <TodoCard />
         </Col>
-        <Col>
+        <Col className="p-0">
           <LegalCard />
         </Col>
       </Row>
-
-      <Footer />
     </Container>
   );
 }
