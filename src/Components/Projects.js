@@ -18,9 +18,9 @@ function Projects() {
       });
   }, []);
   return (
-    <Container className="">
-      <Row className="p-0">
-        <Card className="p-0">
+    <Container className="container mt-5">
+      <Row className="p-0 ">
+        <Card className="p-0 mt-5">
           <Card.Header>
             <h2>My GitHub Repos!</h2>
             <p className="text-justify">
