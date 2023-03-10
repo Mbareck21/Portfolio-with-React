@@ -1,34 +1,42 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import TodoListItem from "./TodoItem";
+import TodoItem from "./TodoItem";
 import { FaSortAlphaDownAlt } from "react-icons/fa";
 import { FaSortAlphaDown } from "react-icons/fa";
+import style from "./TodoListItem.module.css";
 
 const TodoList = ({ todoList, onRemoveTodo, onEditTodo, completeTodo }) => {
   const [isSort, setIsSort] = useState(false);
 
   const handleSortZA = () => {
     todoList.sort((objA, objB) => {
-      if (objA.fields.Title < objB.fields.Title) {
+      const titleA = objA.fields.Title;
+      const titleB = objB.fields.Title;
+      if (titleA > titleB) {
         return 1;
-      } else if (objA.fields.Title > objB.fields.Title) {
+      } else if (titleA < titleB) {
         return -1;
       } else {
         return 0;
       }
     });
+    console.log("todos sorted A-Z");
     setIsSort(!isSort);
   };
+
   const handleSortAZ = () => {
     todoList.sort((objA, objB) => {
-      if (objA.fields.Title < objB.fields.Title) {
+      const titleA = objA.fields.Title;
+      const titleB = objB.fields.Title;
+      if (titleA > titleB) {
         return -1;
-      } else if (objA.fields.Title > objB.fields.Title) {
+      } else if (titleA < titleB) {
         return 1;
       } else {
         return 0;
       }
     });
+    console.log("todos sorted Z-A");
     setIsSort(!isSort);
   };
   return (
@@ -36,37 +44,37 @@ const TodoList = ({ todoList, onRemoveTodo, onEditTodo, completeTodo }) => {
       {isSort ? (
         <>
           <span>
-            Sort:{" "}
-            <FaSortAlphaDown onClick={handleSortAZ}  />
+            <h6 className={style.SortText}>Sort:</h6>
+            <FaSortAlphaDown onClick={handleSortAZ} className={style.Sort} />
           </span>
 
           <ul>
             {todoList.map((todo) => (
-              <TodoListItem
-                key={todo.id}
+              <TodoItem
+                key={todo.fields.Title}
                 onRemoveTodo={onRemoveTodo}
                 onEditTodo={onEditTodo}
                 todo={todo}
                 completeTodo={completeTodo}
-              />
+              ></TodoItem>
             ))}
           </ul>
         </>
       ) : (
         <>
           <span>
-            Sort:{" "}
-            <FaSortAlphaDownAlt onClick={handleSortZA}  />
+            <h6 className={style.SortText}>Sort: </h6>
+            <FaSortAlphaDownAlt onClick={handleSortZA} className={style.Sort} />
           </span>
           <ul>
             {todoList.map((todo) => (
-              <TodoListItem
-                key={todo.id}
+              <TodoItem
+                key={todo.fields.Title}
                 onRemoveTodo={onRemoveTodo}
                 onEditTodo={onEditTodo}
                 todo={todo}
                 completeTodo={completeTodo}
-              />
+              ></TodoItem>
             ))}
           </ul>
         </>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TodoForm from "./TodoForm";
 import Navbar from "../Navbar";
 import { Container, Row, Card } from "react-bootstrap";
@@ -7,8 +7,32 @@ import Footer from "../Footer";
 function RenderTodoList() {
   const [todoList, setTodoList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  function addTodo(newTodo) {
+    console.log("New todo:", newTodo.fields.Title);
 
-  React.useEffect(() => {
+    if (!newTodo.fields.Title || /^\s*$/.test(newTodo.fields.Title)) {
+      return;
+    }
+
+    fetch(
+      `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ fields: newTodo.fields }),
+      }
+    )
+      .then((response) => response.json())
+
+      .then((res) => {
+        setTodoList([...todoList, newTodo]);
+      });
+  }
+
+  useEffect(() => {
     fetch(
       `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default`,
       {
@@ -19,59 +43,20 @@ function RenderTodoList() {
       }
     )
       .then((response) => response.json())
-      .then((res) => {
-        console.log(res.records[0]);
-        setTodoList([...res.records]);
+      .then((result) => {
+        console.log(result.records);
+        setTodoList([...result.records]);
         setIsLoading(false);
       });
   }, []);
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (isLoading === false) {
       localStorage.setItem("todoList", JSON.stringify(todoList));
       return;
     }
   }, [todoList, isLoading]);
-  // remove button
-  const removeTodo = (id) => {
-    fetch(
-      `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((res) => {
-        console.log(res);
-        // Remove the todo from the local state
-        const newTodoList = todoList.filter((todo) => id !== todo.id);
 
-        setTodoList(newTodoList);
-      });
-  };
-
-  function addTodo(newTodo) {
-   
-    fetch(
-      `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ fields: newTodo }),
-      }
-    )
-      .then((response) => response.json())
-      .then((res) => {
-        setTodoList([...todoList, { ...newTodo, id: res.id }]);
-        
-      });
-  }
   function editTodo(updatedTodo) {
     if (!updatedTodo.fields.Title || /^\s*$/.test(updatedTodo.fields.Title)) {
       return;
@@ -95,34 +80,93 @@ function RenderTodoList() {
       }
     )
       .then((response) => response.json())
-      .then(() => {
+      .then((res) => {
+        console.log("Todo Item Updated:", updatedTodo.fields.Title);
         setTodoList(updatedTodoList);
       });
   }
+
+  const completeTodo = (id) => {
+    let updatedTodos = todoList.map((todo) => {
+      if (todo.id === id) {
+        console.log(todo.id);
+        fetch(
+          `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default/${todo.id}`,
+          {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              fields: {
+                ...todo.fields,
+                IsComplete: !todo.fields.IsComplete,
+              },
+            }),
+          }
+        )
+          .then((response) => response.json())
+          .then(() => {
+            setTodoList(updatedTodos);
+          });
+        todo.fields.IsComplete = !todo.fields.IsComplete;
+        console.log("Todo Status updated to:", todo.fields.IsComplete);
+      }
+      return todo;
+    });
+  };
+
+  const removeTodo = (id) => {
+    console.log(id);
+    fetch(
+      `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+
+        const newTodoList = todoList.filter((todo) => id !== todo.id);
+        setTodoList(newTodoList);
+      });
+  };
 
   return (
     <Container>
       <Row className="mb-5">
         <Navbar />
       </Row>
-      <Card className="bg-dark text-white text-center">
+      <Card className="bg-dark text-white text-center w-50 mx-auto d-flex justify-content-center">
         <Card.Header>
           <h1>Todo List</h1>
         </Card.Header>
         <Card.Body>
-          <TodoForm onAddTodo={addTodo} />
+          <Row className="d-flex justify-content-center">
+            <TodoForm onAddTodo={addTodo} />
+          </Row>
 
           {isLoading ? (
             <p>Loading...</p>
           ) : (
-            <TodoList
-              todoList={todoList}
-              onRemoveTodo={removeTodo}
-              onEditTodo={editTodo}
-            />
+            <Row>
+              <TodoList
+                todoList={todoList}
+                onRemoveTodo={removeTodo}
+                onEditTodo={editTodo}
+                completeTodo={completeTodo}
+              />
+            </Row>
           )}
         </Card.Body>
       </Card>
+      <Row className="mb-0" style={{ height: "35vh" }}></Row>
       <Footer />
     </Container>
   );
