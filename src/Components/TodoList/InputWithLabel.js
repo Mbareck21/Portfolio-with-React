@@ -6,19 +6,21 @@ function InputWithLabel(props) {
     inputRef.current.focus();
   }, []);
   return (
-    <Form.Group>
-      <Form.Label htmlFor="title">{props.children}</Form.Label>
-      <Form.Control
-        className="mb-3"
-        type="text"
-        placeholder="add todo item"
-        ref={inputRef}
-        value={props.todoTitle}
-        name="title"
-        id="todoTitle"
-        onChange={props.handleTitleChange}
-      ></Form.Control>
-    </Form.Group>
+    <Form>
+      <Form.Group>
+        <Form.Label htmlFor="title">{props.children}</Form.Label>
+        <Form.Control
+          className="mb-3"
+          type="text"
+          placeholder="add todo item"
+          ref={inputRef}
+          value={props.todoTitle}
+          name="title"
+          id="todoTitle"
+          onChange={props.handleTitleChange}
+        ></Form.Control>
+      </Form.Group>
+    </Form>
   );
 }
 

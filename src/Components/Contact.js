@@ -9,8 +9,6 @@ import {
   Col,
   Container,
 } from "react-bootstrap";
-import Footer from "./Footer";
-import Navbar from "./Navbar";
 
 function Contact() {
   const [name, setName] = useState("");
@@ -20,9 +18,8 @@ function Contact() {
   const formRef = useRef(null);
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Send email using the mailto: protocol
     setYourmsg(
-      <Card style={{ width: "" }} className="mx-auto mt-2">
+      <Card className="mx-auto mt-2">
         <Card.Header>Your Message:</Card.Header>
         <Card.Header>
           <Card.Body>
@@ -39,19 +36,18 @@ function Contact() {
     setName("");
     setEmail("");
     setMessage("");
-    setYourmsg();
+    setYourmsg("");
   };
 
   return (
-    <Container className="pt-4">
-      <Navbar />
+    <Container className="pt-4 mb-5">
       <Row className="d mt-5">
         <Col lg={4}>
-          <Card className="">
+          <Card>
             <Card.Header className="">
               <h5>Get in Touch</h5>
             </Card.Header>
-            <Form ref={formRef} className="p-3 bg-secondary">
+            <Form ref={formRef} className="p-3 bg-secondary rounded-bottom">
               <Form.Group className="mb-3">
                 <Form.Label variant="light">Name</Form.Label>
                 <Form.Control
@@ -115,8 +111,12 @@ function Contact() {
           {yourmsg}
         </Col>
       </Row>
-      <Row style={{  height: "20rem" }} className="text-center p-3 align-items-center"><h5>Under Construction</h5></Row>
-      <Footer />
+      <Row
+        style={{ height: "20rem" }}
+        className="text-center p-3 align-items-center"
+      >
+        <h5>Under Construction</h5>
+      </Row>
     </Container>
   );
 }
