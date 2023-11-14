@@ -9,7 +9,6 @@ This is a personal portfolio website that I am currently building to showcase my
 - HTML
 - CSS
 - JavaScript
-- Node.js
 - GitHub
 
 ## Features
